@@ -8,7 +8,7 @@ function RentPage() {
 
   return (
     <div>
-      <h1>Hyra bil</h1>
+      <h1>Rent car</h1>
       <button onClick={() => (window.location.href = "/")}>Go back</button>
       <RentForm onSubmit={handleRent} />
     </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { fetchCars } from "../api/api";
+import { fetchCars, createRental } from "../api/api";
 
-function RentForm({ onSubmit }) {
+function RentForm() {
   const [cars, setCars] = useState([]);
   const [form, setForm] = useState({
     carId: "",
@@ -10,11 +10,19 @@ function RentForm({ onSubmit }) {
     startDate: "",
     endDate: "",
   });
+  const [feedback, setFeedback] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchCars()
-      .then(setCars)
-      .catch((err) => console.error(err));
+      .then((data) => {
+        setCars(data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setFeedback("Could not fetch cars");
+        setLoading(false);
+      });
   }, []);
 
   const handleChange = (e) => {
@@ -24,26 +32,55 @@ function RentForm({ onSubmit }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (onSubmit) onSubmit(form);
+    setFeedback("");
+    if (
+      !form.carId ||
+      !form.driverName ||
+      !form.driverAge ||
+      !form.startDate ||
+      !form.endDate
+    ) {
+      setFeedback("All fields are required");
+      return;
+    }
+
+    try {
+      await createRental(form);
+      setFeedback("Rental created successfully!");
+      setForm({
+        carId: "",
+        driverName: "",
+        driverAge: "",
+        startDate: "",
+        endDate: "",
+      });
+    } catch (err) {
+      setFeedback(err.message || "Could not create rental");
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Bil:</label>
-        <select name="carId" value={form.carId} onChange={handleChange}>
-          <option value="">Välj bil</option>
+        <label>Car:</label>
+        <select
+          name="carId"
+          value={form.carId}
+          onChange={handleChange}
+          disabled={loading}
+        >
+          <option value="">Select car</option>
           {cars.map((car) => (
             <option key={car.id} value={car.id}>
-              {car.name} ({car.pricePerDay} kr/dag)
+              {car.name} ({car.pricePerDay} SEK/day)
             </option>
           ))}
         </select>
       </div>
       <div>
-        <label>Namn:</label>
+        <label>Name:</label>
         <input
           name="driverName"
           value={form.driverName}
@@ -51,16 +88,17 @@ function RentForm({ onSubmit }) {
         />
       </div>
       <div>
-        <label>Ålder:</label>
+        <label>Age:</label>
         <input
           name="driverAge"
           value={form.driverAge}
           onChange={handleChange}
           type="number"
+          min={18}
         />
       </div>
       <div>
-        <label>Startdatum:</label>
+        <label>Start date:</label>
         <input
           name="startDate"
           value={form.startDate}
@@ -69,7 +107,7 @@ function RentForm({ onSubmit }) {
         />
       </div>
       <div>
-        <label>Slutdatum:</label>
+        <label>End date:</label>
         <input
           name="endDate"
           value={form.endDate}
@@ -77,7 +115,19 @@ function RentForm({ onSubmit }) {
           type="date"
         />
       </div>
-      <button type="submit">Hyra</button>
+      <button type="submit" disabled={loading}>
+        Rent
+      </button>
+      {feedback && (
+        <div
+          style={{
+            color:
+              feedback === "Rental created successfully!" ? "green" : "red",
+          }}
+        >
+          {feedback}
+        </div>
+      )}
     </form>
   );
 }
