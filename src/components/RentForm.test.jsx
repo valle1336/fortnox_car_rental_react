@@ -66,6 +66,7 @@ describe("RentForm", () => {
         driverAge: "25",
         startDate: "2025-07-01",
         endDate: "2025-07-05",
+        revenue: 12000,
       });
       expect(screen.getByText(/Rental created!/i)).toBeInTheDocument();
     });
