@@ -10,38 +10,60 @@ function RentPage() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingTop: "40px",
+        justifyContent: "center",
+        paddingTop: "32px",
+        paddingBottom: "32px",
       }}
     >
       <div
         style={{
           background: "#fff",
-          borderRadius: "12px",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-          maxWidth: "420px",
+          borderRadius: "16px",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.10)",
+          maxWidth: "440px",
           width: "100%",
-          padding: "32px 28px",
+          padding: "0 0 28px 0",
+          position: "relative",
         }}
       >
-        <h1 style={{ marginBottom: 8, textAlign: "center", color: "#385" }}>
-          Rent a Car
-        </h1>
         <button
           onClick={() => (window.location.href = "/")}
           style={{
-            marginBottom: 18,
-            background: "#eee",
-            color: "#444",
+            background: "#f0f2f5",
+            color: "#385",
             border: "none",
-            borderRadius: "4px",
-            padding: "4px 10px",
+            borderRadius: "50px",
+            padding: "6px 16px",
+            fontWeight: 500,
+            fontSize: 15,
+            margin: "18px 0 0 18px",
             cursor: "pointer",
-            float: "right",
+            boxShadow: "0 1px 3px #eef3ed66",
+            transition: "background 0.16s",
+            position: "absolute",
+            left: 0,
+            top: 0,
           }}
         >
           ← Go back
         </button>
-        <RentForm />
+        <h1
+          style={{
+            margin: 0,
+            textAlign: "center",
+            color: "#253b4a",
+            fontSize: 28,
+            paddingTop: 34,
+            paddingBottom: 8,
+            fontWeight: 600,
+            letterSpacing: "-1px",
+          }}
+        >
+          Rent a Car
+        </h1>
+        <div style={{ padding: "0 24px" }}>
+          <RentForm />
+        </div>
       </div>
     </div>
   );

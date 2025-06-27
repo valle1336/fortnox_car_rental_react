@@ -78,162 +78,169 @@ function RentForm() {
   const cost = getCost();
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: "grid", gap: 16 }}>
-      <div>
-        <label htmlFor="carId" style={{ display: "block", marginBottom: 2 }}>
-          Car:
-        </label>
-        <select
-          name="carId"
-          id="carId"
-          value={form.carId}
-          onChange={handleChange}
+    <div
+      style={{
+        maxWidth: 430,
+        margin: "32px auto",
+        background: "#fff",
+        borderRadius: 16,
+
+        padding: 32,
+      }}
+    >
+      <form onSubmit={handleSubmit} style={{ display: "grid", gap: 18 }}>
+        <div>
+          <label htmlFor="carId" style={labelStyle}>
+            Car:
+          </label>
+          <select
+            name="carId"
+            id="carId"
+            value={form.carId}
+            onChange={handleChange}
+            disabled={loading}
+            style={inputStyle}
+          >
+            <option value="">Select car</option>
+            {cars.map((car) => (
+              <option key={car.id} value={car.id}>
+                {car.name} ({car.pricePerDay} SEK/day)
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="driverName" style={labelStyle}>
+            Name:
+          </label>
+          <input
+            id="driverName"
+            name="driverName"
+            value={form.driverName}
+            onChange={handleChange}
+            autoComplete="off"
+            style={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="driverAge" style={labelStyle}>
+            Age:
+          </label>
+          <input
+            id="driverAge"
+            name="driverAge"
+            value={form.driverAge}
+            onChange={handleChange}
+            type="number"
+            min={18}
+            style={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="startDate" style={labelStyle}>
+            Start date:
+          </label>
+          <input
+            id="startDate"
+            name="startDate"
+            value={form.startDate}
+            onChange={handleChange}
+            type="date"
+            style={inputStyle}
+          />
+        </div>
+        <div>
+          <label htmlFor="endDate" style={labelStyle}>
+            End date:
+          </label>
+          <input
+            id="endDate"
+            name="endDate"
+            value={form.endDate}
+            onChange={handleChange}
+            type="date"
+            style={inputStyle}
+          />
+        </div>
+        {cost && (
+          <div
+            style={{
+              padding: "16px",
+              margin: "8px 0",
+              background: "#f1faf1",
+              color: "#235d23",
+              fontWeight: 600,
+              borderRadius: 8,
+              boxShadow: "0 1px 3px rgba(35,93,35,0.08)",
+              fontSize: 17,
+              textAlign: "center",
+            }}
+          >
+            Cost: {cost} SEK
+          </div>
+        )}
+        <button
+          type="submit"
           disabled={loading}
           style={{
-            width: "100%",
-            padding: "7px",
-            borderRadius: 4,
-            border: "1px solid #ddd",
+            padding: "12px 0",
+            background: "#35836a",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            fontWeight: "bold",
+            fontSize: 17,
+            marginTop: "6px",
+            boxShadow: "0 2px 6px rgba(53,131,106,0.11)",
+            cursor: loading ? "wait" : "pointer",
+            transition: "background 0.18s",
           }}
         >
-          <option value="">Select car</option>
-          {cars.map((car) => (
-            <option key={car.id} value={car.id}>
-              {car.name} ({car.pricePerDay} SEK/day)
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label
-          htmlFor="driverName"
-          style={{ display: "block", marginBottom: 2 }}
-        >
-          Name:
-        </label>
-        <input
-          id="driverName"
-          name="driverName"
-          value={form.driverName}
-          onChange={handleChange}
-          autoComplete="off"
-          style={{
-            width: "100%",
-            padding: "7px",
-            borderRadius: 4,
-            border: "1px solid #ddd",
-          }}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="driverAge"
-          style={{ display: "block", marginBottom: 2 }}
-        >
-          Age:
-        </label>
-        <input
-          id="driverAge"
-          name="driverAge"
-          value={form.driverAge}
-          onChange={handleChange}
-          type="number"
-          min={18}
-          style={{
-            width: "100%",
-            padding: "7px",
-            borderRadius: 4,
-            border: "1px solid #ddd",
-          }}
-        />
-      </div>
-      <div>
-        <label
-          htmlFor="startDate"
-          style={{ display: "block", marginBottom: 2 }}
-        >
-          Start date:
-        </label>
-        <input
-          id="startDate"
-          name="startDate"
-          value={form.startDate}
-          onChange={handleChange}
-          type="date"
-          style={{
-            width: "100%",
-            padding: "7px",
-            borderRadius: 4,
-            border: "1px solid #ddd",
-          }}
-        />
-      </div>
-      <div>
-        <label htmlFor="endDate" style={{ display: "block", marginBottom: 2 }}>
-          End date:
-        </label>
-        <input
-          id="endDate"
-          name="endDate"
-          value={form.endDate}
-          onChange={handleChange}
-          type="date"
-          style={{
-            width: "100%",
-            padding: "7px",
-            borderRadius: 4,
-            border: "1px solid #ddd",
-          }}
-        />
-      </div>
-      {cost && (
-        <div
-          style={{
-            padding: "12px",
-            margin: "4px 0",
-            background: "#f1faf1",
-            color: "#235d23",
-            fontWeight: 600,
-            borderRadius: 6,
-          }}
-        >
-          Cost: {cost} SEK
-        </div>
-      )}
-      <button
-        type="submit"
-        disabled={loading}
-        style={{
-          padding: "10px 0",
-          background: "#385",
-          color: "#fff",
-          border: "none",
-          borderRadius: "4px",
-          fontWeight: "bold",
-          cursor: loading ? "wait" : "pointer",
-        }}
-      >
-        Rent car
-      </button>
-      {feedback && (
-        <div
-          style={{
-            color: feedback === "Rental created!" ? "#235d23" : "#c22",
-            background: "#f9f9f9",
-            border: `1px solid ${
-              feedback === "Rental created!" ? "#adebad" : "#fbb"
-            }`,
-            padding: "8px",
-            marginTop: "2px",
-            borderRadius: 5,
-            fontWeight: 500,
-          }}
-        >
-          {feedback}
-        </div>
-      )}
-    </form>
+          Rent car
+        </button>
+        {feedback && (
+          <div
+            style={{
+              color: feedback === "Rental created!" ? "#235d23" : "#c22",
+              background: "#f9f9f9",
+              border: `1.5px solid ${
+                feedback === "Rental created!" ? "#adebad" : "#fbb"
+              }`,
+              padding: "10px",
+              marginTop: "2px",
+              borderRadius: 8,
+              fontWeight: 500,
+              textAlign: "center",
+              boxShadow:
+                feedback === "Rental created!"
+                  ? "0 1px 4px #adebad55"
+                  : "0 1px 4px #ffbbbb44",
+            }}
+          >
+            {feedback}
+          </div>
+        )}
+      </form>
+    </div>
   );
 }
+
+const labelStyle = {
+  display: "block",
+  marginBottom: 4,
+  fontWeight: 500,
+  color: "#253b4a",
+};
+
+const inputStyle = {
+  width: "100%",
+  padding: "9px",
+  borderRadius: 6,
+  border: "1.5px solid #dde2ee",
+  fontSize: 16,
+  marginTop: 2,
+  marginBottom: 2,
+  background: "#f8fafc",
+};
 
 export default RentForm;
