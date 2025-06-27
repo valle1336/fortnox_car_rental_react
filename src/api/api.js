@@ -15,3 +15,18 @@ export async function fetchRentals() {
   }
   return await response.json();
 }
+
+export async function createRental(rental) {
+  const response = await fetch(`${API_URL}/rentals/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(rental),
+  });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(errorText || "Något gick fel vid bokning.");
+  }
+  return response.json();
+}
