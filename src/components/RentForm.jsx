@@ -46,6 +46,7 @@ function RentForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFeedback("");
+    const cost = getCost();
     if (
       !form.carId ||
       !form.driverName ||
@@ -57,7 +58,10 @@ function RentForm() {
       return;
     }
     try {
-      await createRental(form);
+      await createRental({
+        ...form,
+        revenue: cost,
+      });
       setFeedback("Rental created!");
       setForm({
         carId: "",
