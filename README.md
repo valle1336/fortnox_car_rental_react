@@ -7,8 +7,8 @@ Node.js (v18+ rekommenderas)
 NPM
 
 1. Clone the repo
-2. npm install
-3. Environment config (Create your own .env file and add "REACT_APP_API_URL=someApiUrl"
+2. Environment config (Create your own .env file and add "REACT_APP_API_URL=someApiUrl"
+3. npm install
 4. Start the app (npm start)
 
 Routes: 
