@@ -138,7 +138,7 @@ function RentForm() {
         </div>
         <div>
           <label htmlFor="startDate" style={labelStyle}>
-            Start date:
+            Pickup date:
           </label>
           <input
             id="startDate"
@@ -151,7 +151,7 @@ function RentForm() {
         </div>
         <div>
           <label htmlFor="endDate" style={labelStyle}>
-            End date:
+            Drop off date:
           </label>
           <input
             id="endDate"
