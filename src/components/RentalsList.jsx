@@ -5,6 +5,7 @@ function RentalsList() {
   const [rentals, setRentals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [revenueHeaderClicks, setRevenueHeaderClicks] = useState(0);
 
   useEffect(() => {
     fetchRentals()
@@ -34,6 +35,21 @@ function RentalsList() {
         margin: "32px auto",
       }}
     >
+      <button
+        onClick={() => (window.location.href = "/")}
+        style={{
+          marginBottom: 16,
+          background: "#eee",
+          color: "#444",
+          border: "none",
+          borderRadius: "4px",
+          padding: "6px 14px",
+          cursor: "pointer",
+          float: "left",
+        }}
+      >
+        ← Go back
+      </button>
       <h2 style={{ textAlign: "center", marginBottom: 24 }}>All Rentals</h2>
       <table
         style={{
@@ -49,7 +65,13 @@ function RentalsList() {
             <th style={th}>Age</th>
             <th style={th}>From</th>
             <th style={th}>To</th>
-            <th style={th}>Revenue (SEK)</th>
+            <th
+              style={{ ...th, cursor: "pointer" }}
+              onClick={() => setRevenueHeaderClicks((prev) => prev + 1)}
+              title="Click me!"
+            >
+              {revenueHeaderClicks >= 3 ? "💰" : "Revenue (SEK)"}
+            </th>
           </tr>
         </thead>
         <tbody>
