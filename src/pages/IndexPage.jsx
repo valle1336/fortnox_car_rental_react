@@ -42,7 +42,7 @@ function IndexPage() {
           onClick={() => (window.location.href = "/rent")}
           style={{ ...buttonStyle, marginBottom: 14 }}
         >
-          🚗 Rent a Car
+          Rent a Car 🚗
         </button>
         <button
           onClick={() => (window.location.href = "/admin")}
