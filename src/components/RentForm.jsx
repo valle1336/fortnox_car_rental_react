@@ -32,6 +32,17 @@ function RentForm() {
     });
   };
 
+  const getCost = () => {
+    const car = cars.find((c) => c.id === Number(form.carId));
+    if (!car || !form.startDate || !form.endDate) return "";
+    const start = new Date(form.startDate);
+    const end = new Date(form.endDate);
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const days = Math.ceil((end - start) / msPerDay);
+    if (isNaN(days) || days <= 0) return "";
+    return days * car.pricePerDay;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFeedback("");
@@ -42,13 +53,12 @@ function RentForm() {
       !form.startDate ||
       !form.endDate
     ) {
-      setFeedback("All fields are required");
+      setFeedback("All fields are required.");
       return;
     }
-
     try {
       await createRental(form);
-      setFeedback("Rental created successfully!");
+      setFeedback("Rental created!");
       setForm({
         carId: "",
         driverName: "",
@@ -60,6 +70,8 @@ function RentForm() {
       setFeedback(err.message || "Could not create rental");
     }
   };
+
+  const cost = getCost();
 
   return (
     <form onSubmit={handleSubmit}>
@@ -115,14 +127,19 @@ function RentForm() {
           type="date"
         />
       </div>
+      {cost && (
+        <div>
+          <strong>Cost: {cost} SEK</strong>
+        </div>
+      )}
       <button type="submit" disabled={loading}>
-        Rent
+        Rent car
       </button>
       {feedback && (
         <div
           style={{
-            color:
-              feedback === "Rental created successfully!" ? "green" : "red",
+            color: feedback === "Rental created!" ? "green" : "red",
+            marginTop: "1em",
           }}
         >
           {feedback}
