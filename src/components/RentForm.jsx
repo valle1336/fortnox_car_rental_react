@@ -27,7 +27,6 @@ function RentForm({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (onSubmit) onSubmit(form);
-    // console.log(form); // För debugging
   };
 
   return (
