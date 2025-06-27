@@ -12,44 +12,88 @@ function RentalsList() {
         setRentals(data);
         setLoading(false);
       })
-      .catch((err) => {
-        setError("Kunde inte hämta uthyrningar");
+      .catch(() => {
+        setError("Could not fetch rentals");
         setLoading(false);
       });
   }, []);
 
-  if (loading) return <p>Laddar uthyrningar...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  const totalRevenue = rentals.reduce((sum, r) => sum + (r.revenue || 0), 0);
+
+  if (loading) return <p style={{ padding: 16 }}>Loading rentals...</p>;
+  if (error) return <p style={{ color: "red", padding: 16 }}>{error}</p>;
 
   return (
-    <div>
-      <h2>Uthyrningar</h2>
-      <table>
+    <div
+      style={{
+        background: "#fff",
+        borderRadius: 10,
+        padding: 24,
+        boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+        maxWidth: 860,
+        margin: "32px auto",
+      }}
+    >
+      <h2 style={{ textAlign: "center", marginBottom: 24 }}>All Rentals</h2>
+      <table
+        style={{
+          width: "100%",
+          borderCollapse: "collapse",
+          fontSize: 16,
+        }}
+      >
         <thead>
-          <tr>
-            <th>Förare</th>
-            <th>Bil-ID</th>
-            <th>Ålder</th>
-            <th>Från</th>
-            <th>Till</th>
-            <th>Intäkt (kr)</th>
+          <tr style={{ background: "#f6f8fa" }}>
+            <th style={th}>Driver</th>
+            <th style={th}>Car ID</th>
+            <th style={th}>Age</th>
+            <th style={th}>From</th>
+            <th style={th}>To</th>
+            <th style={th}>Revenue (SEK)</th>
           </tr>
         </thead>
         <tbody>
-          {rentals.map((rental) => (
-            <tr key={rental.id}>
-              <td>{rental.driverName}</td>
-              <td>{rental.carId}</td>
-              <td>{rental.driverAge}</td>
-              <td>{rental.startDate}</td>
-              <td>{rental.endDate}</td>
-              <td>{rental.revenue}</td>
+          {rentals.map((rental, idx) => (
+            <tr
+              key={rental.id}
+              style={{
+                background: idx % 2 ? "#f9fbfc" : "#fff",
+              }}
+            >
+              <td style={td}>{rental.driverName}</td>
+              <td style={td}>{rental.carId}</td>
+              <td style={td}>{rental.driverAge}</td>
+              <td style={td}>{rental.startDate}</td>
+              <td style={td}>{rental.endDate}</td>
+              <td style={td}>{rental.revenue}</td>
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td
+              colSpan={5}
+              style={{ ...td, fontWeight: "bold", textAlign: "right" }}
+            >
+              Total revenue:
+            </td>
+            <td style={{ ...td, fontWeight: "bold" }}>{totalRevenue} SEK</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );
 }
+
+const th = {
+  padding: "12px 8px",
+  borderBottom: "2px solid #dde3e8",
+  textAlign: "left",
+};
+
+const td = {
+  padding: "10px 8px",
+  borderBottom: "1px solid #eef2f5",
+};
 
 export default RentalsList;
