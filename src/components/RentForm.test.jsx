@@ -22,8 +22,8 @@ describe("RentForm", () => {
     expect(await screen.findByLabelText(/Car:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Name:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Age:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Start date:/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/End date:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Pickup date:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Drop off date:/i)).toBeInTheDocument();
   });
 
   // Test 2: Skickar vi in tomt formulär så visas ett felmeddelande
@@ -50,10 +50,10 @@ describe("RentForm", () => {
     fireEvent.change(screen.getByLabelText(/Age:/i), {
       target: { value: "25" },
     });
-    fireEvent.change(screen.getByLabelText(/Start date:/i), {
+    fireEvent.change(screen.getByLabelText(/Pickup date:/i), {
       target: { value: "2025-07-01" },
     });
-    fireEvent.change(screen.getByLabelText(/End date:/i), {
+    fireEvent.change(screen.getByLabelText(/Drop off date:/i), {
       target: { value: "2025-07-05" },
     });
 
