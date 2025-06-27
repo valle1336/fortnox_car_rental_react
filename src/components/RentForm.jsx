@@ -74,14 +74,23 @@ function RentForm() {
   const cost = getCost();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ display: "grid", gap: 16 }}>
       <div>
-        <label>Car:</label>
+        <label htmlFor="carId" style={{ display: "block", marginBottom: 2 }}>
+          Car:
+        </label>
         <select
           name="carId"
+          id="carId"
           value={form.carId}
           onChange={handleChange}
           disabled={loading}
+          style={{
+            width: "100%",
+            padding: "7px",
+            borderRadius: 4,
+            border: "1px solid #ddd",
+          }}
         >
           <option value="">Select car</option>
           {cars.map((car) => (
@@ -92,54 +101,128 @@ function RentForm() {
         </select>
       </div>
       <div>
-        <label>Name:</label>
+        <label
+          htmlFor="driverName"
+          style={{ display: "block", marginBottom: 2 }}
+        >
+          Name:
+        </label>
         <input
+          id="driverName"
           name="driverName"
           value={form.driverName}
           onChange={handleChange}
+          autoComplete="off"
+          style={{
+            width: "100%",
+            padding: "7px",
+            borderRadius: 4,
+            border: "1px solid #ddd",
+          }}
         />
       </div>
       <div>
-        <label>Age:</label>
+        <label
+          htmlFor="driverAge"
+          style={{ display: "block", marginBottom: 2 }}
+        >
+          Age:
+        </label>
         <input
+          id="driverAge"
           name="driverAge"
           value={form.driverAge}
           onChange={handleChange}
           type="number"
           min={18}
+          style={{
+            width: "100%",
+            padding: "7px",
+            borderRadius: 4,
+            border: "1px solid #ddd",
+          }}
         />
       </div>
       <div>
-        <label>Start date:</label>
+        <label
+          htmlFor="startDate"
+          style={{ display: "block", marginBottom: 2 }}
+        >
+          Start date:
+        </label>
         <input
+          id="startDate"
           name="startDate"
           value={form.startDate}
           onChange={handleChange}
           type="date"
+          style={{
+            width: "100%",
+            padding: "7px",
+            borderRadius: 4,
+            border: "1px solid #ddd",
+          }}
         />
       </div>
       <div>
-        <label>End date:</label>
+        <label htmlFor="endDate" style={{ display: "block", marginBottom: 2 }}>
+          End date:
+        </label>
         <input
+          id="endDate"
           name="endDate"
           value={form.endDate}
           onChange={handleChange}
           type="date"
+          style={{
+            width: "100%",
+            padding: "7px",
+            borderRadius: 4,
+            border: "1px solid #ddd",
+          }}
         />
       </div>
       {cost && (
-        <div>
-          <strong>Cost: {cost} SEK</strong>
+        <div
+          style={{
+            padding: "12px",
+            margin: "4px 0",
+            background: "#f1faf1",
+            color: "#235d23",
+            fontWeight: 600,
+            borderRadius: 6,
+          }}
+        >
+          Cost: {cost} SEK
         </div>
       )}
-      <button type="submit" disabled={loading}>
+      <button
+        type="submit"
+        disabled={loading}
+        style={{
+          padding: "10px 0",
+          background: "#385",
+          color: "#fff",
+          border: "none",
+          borderRadius: "4px",
+          fontWeight: "bold",
+          cursor: loading ? "wait" : "pointer",
+        }}
+      >
         Rent car
       </button>
       {feedback && (
         <div
           style={{
-            color: feedback === "Rental created!" ? "green" : "red",
-            marginTop: "1em",
+            color: feedback === "Rental created!" ? "#235d23" : "#c22",
+            background: "#f9f9f9",
+            border: `1px solid ${
+              feedback === "Rental created!" ? "#adebad" : "#fbb"
+            }`,
+            padding: "8px",
+            marginTop: "2px",
+            borderRadius: 5,
+            fontWeight: 500,
           }}
         >
           {feedback}
