@@ -1,4 +1,4 @@
-Fortnox Car Rental – Frontend
+Car Rental – Frontend
 
 React SPA for the Fortnox Car Rental assignment.
 
